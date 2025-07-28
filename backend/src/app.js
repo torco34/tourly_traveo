@@ -6,5 +6,5 @@ const cliente = require('./modules/clientes/rutas');
 app.set('port', config.app.port);
 //rutas
 app.use("/api/cliente", cliente)
-app
+
 module.exports = app;
