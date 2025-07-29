@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const repuesta = require('../../red/respuesta');
+const controller = require('./controllers');
 router.get('/', function (req, res) {
-    res.send('Clientes API is working');
+    const todos = controller.getAll()
+
+    repuesta.success(res, todos);
 });
 module.exports = router;
