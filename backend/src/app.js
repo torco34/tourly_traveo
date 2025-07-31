@@ -5,6 +5,6 @@ const cliente = require('./modules/clientes/rutas');
 // configuración de rutas
 app.set('port', config.app.port);
 //rutas
-app.use("/api/cliente", cliente)
+app.use("/api/clientes", cliente)
 
 module.exports = app;

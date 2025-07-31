@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const repuesta = require('../../red/respuesta');
+const respuesta = require('../../red/respuesta');
 const controller = require('./controllers');
-router.get('/', function (req, res) {
-    const todos = controller.getAll()
-
-    repuesta.success(res, todos);
+router.get('/', async function (req, res) {
+    try {
+        const clientes = await controller.getAll();
+        respuesta.success(req, res, clientes, 200);
+    } catch (err) {
+        console.error('Error en GET /:', err);
+        respuesta.error(req, res, 'No se pudieron obtener los clientes', 500);
+    }
 });
 module.exports = router;

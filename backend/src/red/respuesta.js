@@ -1,16 +1,16 @@
-exports.success = function (res, message, status = 200) {
+// src/red/respuesta.js
+exports.success = function (req, res, data, status = 200) {
     return res.status(status).send({
         error: false,
         status,
-        message
-    });
+      message: data
+  });
 };
 
 exports.error = function (req, res, message = 'error interno', status = 500) {
-
-    return res.status(statusCode).send({
+    return res.status(status).send({
         error: true,
         status,
         message
     });
-}
+};
