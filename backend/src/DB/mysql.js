@@ -44,7 +44,18 @@ function all(tabla) {
         });
     });
 }
-
+function getId(tabla, id) {
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT * FROM ${tabla} WHERE id = ?`, [id], (err, results) => {
+            if (err) {
+                console.error('Error fetching data by ID:', err);
+                return reject(err);
+            }
+            resolve(results[0]);
+        });
+    })
+}
 module.exports = {
     all,
+    getId
 };

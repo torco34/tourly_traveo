@@ -11,4 +11,13 @@ router.get('/', async function (req, res) {
         respuesta.error(req, res, 'No se pudieron obtener los clientes', 500);
     }
 });
+router.get('/:id', async function (req, res) {
+    try {
+        const clientes = await controller.getId(req.params.id);
+        respuesta.error(req, res, 'No se pudieron obtener los clientes', 500);
+    } catch (err) {
+        console.error('Error en GET /:', err);
+        respuesta.error(req, res, 'No se pudieron obtener los clientes', 500);
+    }
+});
 module.exports = router;
