@@ -4,8 +4,8 @@ const table = 'clientes';
 function getAll() {
     return db.all(table);
 }
-function getId() {
-    return db.all(table, id);
+function getId(id) {
+    return db.getId(table, id);
 }
 module.exports = {
     getAll,
