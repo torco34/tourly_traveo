@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const respuesta = require('../../red/respuesta');
 const controller = require('./controllers');
-router.get('/', async function (req, res) {
+// Define las rutas
+router.get('/', getAll)
+router.get('/:id', getId)
+async function getAll(req, res) {
     try {
         const clientes = await controller.getAll();
         respuesta.success(req, res, clientes, 200);
@@ -10,8 +13,8 @@ router.get('/', async function (req, res) {
         console.error('Error en GET /:', err);
         respuesta.error(req, res, 'No se pudieron obtener los clientes', 500);
     }
-});
-router.get('/:id', async function (req, res) {
+}
+async function getId(req, res) {
     try {
       const cliente = await controller.getId(req.params.id);
       if (!cliente) {
@@ -22,5 +25,5 @@ router.get('/:id', async function (req, res) {
       console.error('Error en GET /:id:', err);
       respuesta.error(req, res, 'No se pudieron obtener los clientes', 500);
   }
-});
+}
 module.exports = router;

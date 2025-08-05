@@ -50,11 +50,12 @@ function getId(tabla, id) {
           `SELECT * FROM ${tabla} WHERE id = ?`,
           [id],
           (err, results) => {
-              if (err) {
-                  console.error('Error fetching data by ID:', err);
-                  return reject(err);
-              }
-            resolve(results[0]); // si no hay, será undefined
+              return err ? reject(err) : resolve(results[0]); // si no hay, será undefined
+              //   if (err) {
+              //       console.error('Error fetching data by ID:', err);
+              //       return reject(err);
+              //   }
+              // resolve(results[0]); // si no hay, será undefined
         }
     );
   });
