@@ -7,7 +7,11 @@ function getAll() {
 function getId(id) {
     return db.getId(table, id);
 }
+function putDelete(body) {
+    return db.putDelete(table, body);
+}
 module.exports = {
     getAll,
-    getId
+    getId,
+    putDelete
 }

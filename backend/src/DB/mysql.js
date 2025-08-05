@@ -51,11 +51,20 @@ function getId(tabla, id) {
           [id],
           (err, results) => {
               return err ? reject(err) : resolve(results[0]); // si no hay, será undefined
-              //   if (err) {
-              //       console.error('Error fetching data by ID:', err);
-              //       return reject(err);
-              //   }
-              // resolve(results[0]); // si no hay, será undefined
+
+          }
+      );
+    });
+}
+// Función para eliminar un cliente
+function putDelete(tabla, data) {
+    return new Promise((resolve, reject) => {
+        connection.query(
+            `DELETE  FROM ${tabla} WHERE id = ?`,
+            data.id,
+            (err, results) => {
+                return err ? reject(err) : resolve(results[0]); // si no hay, será undefined
+
         }
     );
   });
