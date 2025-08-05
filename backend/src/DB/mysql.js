@@ -71,5 +71,6 @@ function putDelete(tabla, data) {
 }
 module.exports = {
     all,
-    getId
+    getId,
+    putDelete
 };
