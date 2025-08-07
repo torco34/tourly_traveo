@@ -79,10 +79,24 @@ function putUpdate(tabla, data) {
         });
     });
 }
+function putDelete(table, id) {
+    return new Promise((resolve, reject) => {
+        if (!id || !table) {
+            return reject(new Error('Tabla e ID son requeridos'));
+        }
+
+        const query = `DELETE FROM ${table} WHERE id = ?`;
+        connection.query(query, [id], (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        });
+    });
+}
 
 
 module.exports = {
     all,
     getId,
     putUpdate,
+    putDelete
 }

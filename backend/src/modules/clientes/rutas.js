@@ -6,6 +6,7 @@ const controller = require('./controllers');
 router.get('/', getAll)
 router.get('/:id', getId)
 router.put('/:id', updateCliente)
+router.delete('/:id', deleteCliente);
 async function getAll(req, res) {
     try {
         const clientes = await controller.getAll();
@@ -43,6 +44,32 @@ async function updateCliente(req, res) {
     } catch (err) {
         console.error('Error en PUT /:id:', err);
         respuesta.error(req, res, 'No se pudo actualizar el cliente', 500);
+    }
+}
+
+async function deleteCliente(req, res) {
+    const { id } = req.params;
+
+    try {
+        if (!id) {
+            return res.status(400).json({ error: true, message: 'ID es requerido' });
+        }
+
+        const resultado = await controller.deleteId(id); // ← solo pasar el ID
+
+        res.status(200).json({
+            error: false,
+            status: 200,
+            message: resultado
+        });
+
+    } catch (err) {
+        console.error('Error en DELETE /:id:', err);
+        res.status(500).json({
+            error: true,
+            status: 500,
+            message: 'Error al eliminar el cliente'
+        });
     }
 }
 module.exports = router;
