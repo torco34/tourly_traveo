@@ -57,20 +57,32 @@ function getId(tabla, id) {
     });
 }
 // Función para eliminar un cliente
-function putDelete(tabla, data) {
+function putUpdate(tabla, data) {
     return new Promise((resolve, reject) => {
-        connection.query(
-            `DELETE  FROM ${tabla} WHERE id = ?`,
-            data.id,
-            (err, results) => {
-                return err ? reject(err) : resolve(results[0]); // si no hay, será undefined
+        const { id, ...campos } = data;
 
+        if (!id || Object.keys(campos).length === 0) {
+            return reject(new Error("ID y campos a actualizar son requeridos"));
         }
-    );
-  });
+
+        const keys = Object.keys(campos);
+        const values = Object.values(campos);
+
+        const setClause = keys.map(key => `${key} = ?`).join(', ');
+        const sql = `UPDATE ?? SET ${setClause} WHERE id = ?`;
+
+        const params = [tabla, ...values, id];
+
+        connection.query(sql, params, (err, results) => {
+            if (err) return reject(err);
+            resolve(results);
+        });
+    });
 }
+
+
 module.exports = {
     all,
     getId,
-    putDelete
-};
+    putUpdate,
+}

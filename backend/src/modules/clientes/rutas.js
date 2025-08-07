@@ -5,7 +5,7 @@ const controller = require('./controllers');
 // Define las rutas
 router.get('/', getAll)
 router.get('/:id', getId)
-router.put('/', putDelete)
+router.put('/:id', updateCliente)
 async function getAll(req, res) {
     try {
         const clientes = await controller.getAll();
@@ -27,16 +27,22 @@ async function getId(req, res) {
       respuesta.error(req, res, 'No se pudieron obtener los clientes', 500);
   }
 }
-async function putDelete(req, res) {
+async function updateCliente(req, res) {
     try {
-        const cliente = await controller.putDelete(req.params.id);
+        console.log('req.body:', req.body);
+        const data = {
+            id: req.params.id,
+            ...req.body
+        };
+        console.log('Datos recibidos en PUT /clientes/:id =>', data);
+        const cliente = await controller.update(data);
         if (!cliente) {
             return respuesta.error(req, res, 'Cliente no encontrado', 404);
         }
         respuesta.success(req, res, cliente, 200);
     } catch (err) {
-        console.error('Error en GET /:id:', err);
-        respuesta.error(req, res, 'No se pudieron obtener los clientes', 500);
+        console.error('Error en PUT /:id:', err);
+        respuesta.error(req, res, 'No se pudo actualizar el cliente', 500);
     }
 }
 module.exports = router;
