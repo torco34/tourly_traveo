@@ -93,10 +93,25 @@ function putDelete(table, id) {
     });
 }
 
+function postInsert(table, data) {
+    return new Promise((resolve, reject) => {
+        if (!data || Object.keys(data).length === 0) {
+            return reject(new Error('Datos requeridos para insertar'));
+        }
+
+        const query = `INSERT INTO ${table} SET ?`;
+        connection.query(query, data, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        });
+    });
+}
+
 
 module.exports = {
     all,
     getId,
     putUpdate,
-    putDelete
+    putDelete,
+    postInsert
 }

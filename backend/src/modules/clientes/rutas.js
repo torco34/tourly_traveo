@@ -7,6 +7,7 @@ router.get('/', getAll)
 router.get('/:id', getId)
 router.put('/:id', updateCliente)
 router.delete('/:id', deleteCliente);
+router.post('/', createCliente);
 async function getAll(req, res) {
     try {
         const clientes = await controller.getAll();
@@ -72,4 +73,25 @@ async function deleteCliente(req, res) {
         });
     }
 }
+async function createCliente(req, res) {
+    const data = req.body;
+
+    try {
+        if (!data || Object.keys(data).length === 0) {
+            return res.status(400).json({ error: true, message: 'Datos del cliente requeridos' });
+        }
+
+        const resultado = await controller.insert(data);
+        res.status(201).json({
+            error: false,
+            status: 201,
+            message: resultado
+        });
+
+    } catch (err) {
+        console.error('Error en POST /clientes:', err);
+        res.status(500).json({ error: true, message: 'Error al insertar cliente' });
+    }
+}
+
 module.exports = router;
